@@ -17,55 +17,7 @@ Build a **production-ready Kubernetes platform on Azure** with:
 - Production-grade security and high availability
 - Multi-environment support (dev/staging/prod)
 
-**Result:** Push code → Automatic build → Automatic deploy → Zero downtime
 
----
-
-##  Architecture
-
-### High-Level Overview
-
-```
-<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/bc043633-250d-4611-8ccb-a1b90ecd45fe" />
-
-```
-
-### Deployment Flow
-
-```
-┌──────────────┐
-│  Developer   │
-│  Pushes Code │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────────────┐
-│  GitHub Actions      │
-│  • Build Docker      │
-│  • Push to ACR       │
-│  • Update Manifests  │
-└──────┬───────────────┘
-       │
-       ▼
-┌──────────────────────┐
-│  Flux CD (in AKS)    │
-│  • Watches Git       │
-│  • Detects Change    │
-│  • Applies Updates   │
-└──────┬───────────────┘
-       │
-       ▼
-┌──────────────────────┐
-│  AKS Cluster         │
-│  • Rolling Update    │
-│  • Zero Downtime     │
-│  • Health Checks     │
-└──────────────────────┘
-```
-
-**Timeline:** Code push → Production in ~5 minutes
-
----
 
 ## 📁 Repository Structure
 
@@ -107,7 +59,6 @@ aks-terraform/                      # Single monorepo for everything
     └── setup-remote-state.sh
 ```
 
-**Key Design:** Monorepo with path-filtered workflows (only relevant pipelines trigger)
 
 ---
 
@@ -246,34 +197,7 @@ curl http://$EXTERNAL_IP/health
 
 ## Day-to-Day Usage
 
-### Deploy Code Changes
 
-```bash
-# 1. Make changes to application
-vim app-source-code/Program.cs
-
-# 2. Commit and push
-git add app-source-code/
-git commit -m "feat: add new feature"
-git push
-
-# 3. Automatic deployment happens!
-# Monitor at: https://github.com/YOUR-REPO/actions
-```
-
-### Update Infrastructure
-
-```bash
-# 1. Modify Terraform
-vim terraform/environments/dev/main.tf
-
-# 2. Review changes
-cd terraform/environments/dev/
-terraform plan
-
-# 3. Apply changes
-terraform apply
-```
 
 ### Scale Application
 
