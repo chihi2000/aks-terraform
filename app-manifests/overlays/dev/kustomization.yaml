@@ -1,0 +1,56 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: signin-app
+
+resources:
+  - ../../base
+
+patches:
+  # Development-specific patches
+  - target:
+      kind: Deployment
+      name: signin-api
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: replace
+        path: /spec/template/spec/containers/0/env/0/value
+        value: "Development"
+
+  # Lower resource requests for dev
+  - target:
+      kind: Deployment
+      name: signin-api
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "128Mi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "100m"
+
+  # Lower HPA thresholds for dev
+  - target:
+      kind: HorizontalPodAutoscaler
+      name: signin-api
+    patch: |-
+      - op: replace
+        path: /spec/minReplicas
+        value: 2
+      - op: replace
+        path: /spec/maxReplicas
+        value: 5
+
+  # Lower PDB for dev
+  - target:
+      kind: PodDisruptionBudget
+      name: signin-api
+    patch: |-
+      - op: replace
+        path: /spec/minAvailable
+        value: 1
+
+commonLabels:
+  environment: development

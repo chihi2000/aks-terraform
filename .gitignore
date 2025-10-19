@@ -5,10 +5,12 @@ terraform.tfstate
 terraform.tfstate.backup
 *.tfstate
 *.tfstate.*
+*.tfplan
 
 # Terraform variable files (may contain sensitive data)
 *.tfvars
 *.tfvars.json
+!terraform.tfvars.example
 
 # Override files
 override.tf
@@ -43,3 +45,9 @@ crash.*.log
 # Kubernetes
 kubeconfig
 *.kubeconfig
+
+# Archives and backups
+_archived/
+
+# Claude AI workspace
+.claude/

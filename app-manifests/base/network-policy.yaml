@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: signin-api
+  namespace: signin-app
+spec:
+  podSelector:
+    matchLabels:
+      app: signin-api
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from LoadBalancer
+  - from:
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow HTTPS to external services
+  - to:
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+  # Allow HTTP to external services
+  - to:
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 80
