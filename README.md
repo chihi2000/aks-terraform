@@ -8,7 +8,7 @@
 
 ---
 
-## 🎯 Project Goal
+##  Project Goal
 
 Build a **production-ready Kubernetes platform on Azure** with:
 - Automated infrastructure provisioning via Terraform
