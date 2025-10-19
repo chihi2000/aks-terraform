@@ -1,6 +1,6 @@
-# Production-Ready AKS Infrastructure with GitOps
+# .NET API Deployment in AKS using GitOps
 
-> Enterprise-grade Azure Kubernetes Service with automated deployments using Terraform, Flux CD, and Kustomize in a single monorepo.
+
 
 [![Terraform](https://img.shields.io/badge/Terraform-1.5+-623CE4?logo=terraform)](https://www.terraform.io/)
 [![Azure](https://img.shields.io/badge/Azure-AKS-0078D4?logo=microsoft-azure)](https://azure.microsoft.com/)
